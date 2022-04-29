@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    {% for category, posts in post.items %}
+      {% if forloop.first %}
+      <div class="item-first-content">
+        <ul>
+        <li>
+          <a href="{% url 'blog:category_list' category.slug %}"> <h2> {{category.name}} </h2> </a>
+          <div class="subcontainer">
+            {% for post in posts %}
+              {% if forloop.first %}
+                <div class="item-subcontent1">
+                  <img src="{{ post.image.url }}" style="height: 300px; width: 340px;">
+                  <p><a href="{{ post.get_absolute_url }}"> {{ post.title }} </a></p>           
+                  {{ post.text|truncatewords:20|linebreaks }}
+                </div>
+              {% else %}
+                <div class="item-subcontent2">
+                  <ul>
+                    <li class="both">
+                      <img src="{{ post.image.url }}" style="height: 70px; width: 100px;">
+                      <div><a href="{{ post.get_absolute_url }}"> {{post.title}} </a></div>
+                    </li>
+                  </ul>
+                </div>
+              {% endif %}          
+            {% endfor %}
+          </div>
+        </li>
+        </ul>
+      </div>
+      {% else %}
+      <div class="item-other-content">
+        <ul>
+        <li>
+          <a href="{% url 'blog:category_list' category.slug %}"> <h2> {{category.name}} </h2> </a>
+          {% for post in posts %}
+            {% if forloop.first %}
+              <div class="sub-other-content1">
+                <img src="{{ post.image.url }}" style="height: 300px; width: 320px;">
+                <p> <a href="{{ post.get_absolute_url }}"> {{ post.title }} </a> </p>            
+                {{ post.text|truncatewords:20|linebreaks }}
+            </div>
+            {% else %}
+              <div class="sub-other-content2">
+                <ul>
+                  <li class="both">
+                    <img src="{{ post.image.url }}" style="height: 70px; width: 100px;">
+                    <a href="{{ post.get_absolute_url }}"> {{post.title}} </a>
+                  </li>
+                </ul>
+            </div>
+            {% endif %}          
+          {% endfor %}
+        </li>
+        </ul>
+      </div>
+      {% endif %}
+    {% endfor %}
+
+{% endblock %}

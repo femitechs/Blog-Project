@@ -1,0 +1,60 @@
+{%  load blog_tags %}
+
+{%  load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %} {% endblock %} </title>
+</head>
+<body>
+    <div class="grid-container">
+        
+            <nav class="item-nav">
+                <ul>
+                    <li class="active"> 
+                        <a href="{% url 'blog:index' %}"> Home </a> 
+                    </li>
+                    {% for cat in categories %}
+                        <li class="active">
+                            <a href="{% url 'blog:category_list' cat.slug %}"> {{ cat.name }} </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <div class="dot"></div>
+            </nav>
+        
+            <div class="item-sidebar">            
+                <h3> Latest Posts </h3>
+                {% show_latest_posts 4 %}
+
+                <p>
+                    <h3> Most Commented Posts </h3>
+                    
+                    {% get_most_commented_posts as most_commented_posts %}                    
+                    
+                    {% for posts in most_commented_posts %}                    
+                        <p>
+                            <a href="{{ posts.get_absolute_url }}"> {{posts.title}} {{ posts.total_comments }} </a>
+                        </p>
+                    {% endfor %}
+                </p>
+            </div> 
+        
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            
+        
+
+        <div>  
+            {% block script %}
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>

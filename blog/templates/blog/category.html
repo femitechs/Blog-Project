@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h2> {{ category_target }} </h2>
+    <div class="infinite-container">
+    
+        {% for number in numbers %}
+            <div class="infinite-item">
+                        
+                <p>
+                    <a href="{{ number.get_absolute_url }}"> {{number.title}} </a>
+                </p>
+                <p>
+                    <img src="{{ number.image.url }}" style="height: 300px; width: 400px;">
+                </p>
+                        
+            </div>
+        {% endfor %}
+    </div>
+    {% if numbers.has_next %}
+    <a class="infinite-more-link" href="?page={{ numbers.next_page_number }}">More</a>
+    {% endif %}
+        
+{% endblock %}
+
+{% block script %}
+        
+    <script src="{% static 'js/jquery-3.6.0.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.js' %}"></script>
+    <script src="{% static 'js/infinite.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+{% endblock %}
