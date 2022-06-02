@@ -12,7 +12,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def post_list(request):
     
     post = {category: 
-        Post.objects.filter(category = category).order_by('-publish')[:3] for category in Category.objects.all()}
+        Post.objects.filter(category = category).order_by('-publish')[:5] for category in Category.objects.all()}
     
     context = {'post':post}
     return render(request, 'blog/list.html', context)
