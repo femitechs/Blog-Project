@@ -12,12 +12,13 @@
 </head>
 <body>
     <div class="grid-container">
-        
+
             <nav class="item-nav">
                 <ul>
                     <li class="active"> 
                         <a href="{% url 'blog:index' %}"> Home </a> 
                     </li>
+                    {% category as categories %}
                     {% for cat in categories %}
                         <li class="active">
                             <a href="{% url 'blog:category_list' cat.slug %}"> {{ cat.name }} </a>
@@ -29,7 +30,7 @@
         
             <div class="item-sidebar">            
                 <h3> Latest Posts </h3>
-                {% show_latest_posts 4 %}
+                    {% show_latest_posts 4 %}
 
                 <p>
                     <h3> Most Commented Posts </h3>
